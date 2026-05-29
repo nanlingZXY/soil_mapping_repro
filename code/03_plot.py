@@ -33,11 +33,11 @@ ATTR_CN = "速效钾"
 # ===================== 4读取预处理后数据 =====================
 print("正在读取预处理后土壤样点数据...")
 sample_df = pd.read_csv(SAMPLE_PATH, encoding='utf-8')
-print(f"✅ 有效样点数量：{len(sample_df)}")
+print(f"有效样点数量：{len(sample_df)}")
 
 print("正在读取插值网格数据...")
 grid_gdf = gpd.read_file(GRID_PATH, encoding='gbk')
-print(f"✅ 插值网格数量：{len(grid_gdf)}")
+print(f"插值网格数量：{len(grid_gdf)}")
 
 # ===================== 普通克里格插值 =====================
 print("开始执行普通克里格插值...")
