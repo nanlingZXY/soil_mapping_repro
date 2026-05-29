@@ -1,0 +1,52 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "repro",
+    "section": "",
+    "text": "1 研究背景\n本次作业复现普通克里格（Ordinary Kriging, OK） 空间插值方法，基于湖北省随州市曾都区654个表层土壤样点数据，实现土壤属性的连续空间分布制图，验证经典地统计方法在县域土壤属性数字制图中的应用效果。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>土壤属性插值复现</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#数据源说明",
+    "href": "index.html#数据源说明",
+    "title": "repro",
+    "section": "2.1 数据源说明",
+    "text": "2.1 数据源说明\n\n土壤样点数据：曾都历史数据.xls，共654个样点，包含X/Y投影坐标、土壤属性（碱解氮、有效磷、速效钾、有机质、PH值）及地形、气候、土壤类型等环境变量\n插值网格数据：曾都渔网点.shp，研究区规则网格点，用于生成连续空间分布结果",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>土壤属性插值复现</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#数据读取与预处理",
+    "href": "index.html#数据读取与预处理",
+    "title": "repro",
+    "section": "2.2 数据读取与预处理",
+    "text": "2.2 数据读取与预处理\n\n# ====================== 创建processed文件夹 ======================\nos.makedirs(PROCESSED_DIR, exist_ok=True)\nprint(f\"✅ 已创建处理后数据文件夹：{PROCESSED_DIR}\")\n\n# ====================== 读取并预处理土壤样点数据 ======================\nprint(\"\\n📥 正在读取原始土壤样点数据...\")\ntry:\n    # 读取Excel数据\n    raw_df = pd.read_excel(RAW_SAMPLE_PATH, sheet_name=\"曾都历史数据\")\n    print(f\"📊 原始样点数据：\")\n    print(f\"   - 总记录数：{len(raw_df)}\")\n    print(f\"   - 核心列名：{[X_COL, Y_COL, TARGET_ATTR, 'PH值', '碱解氮', '有效磷', '速效钾']}\")\nexcept Exception as e:\n    print(f\"❌ 读取Excel数据失败：{e}\")\n    exit(1)\n\n# 3.1 数据清洗：删除缺失值\nprint(\"\\n🧹 数据清洗：删除缺失值...\")\nprocessed_df = raw_df.dropna(subset=[X_COL, Y_COL, TARGET_ATTR])\nprint(f\"   - 清洗后记录数：{len(processed_df)}\")\n\n# 3.2 去重\nprint(\"🗑️ 去除重复数据...\")\ninitial_count = len(processed_df)\nprocessed_df = processed_df.drop_duplicates(subset=[X_COL, Y_COL, TARGET_ATTR], keep=\"first\")\nprint(f\"   - 去除重复数：{initial_count - len(processed_df)}，剩余记录数：{len(processed_df)}\")\n\n# 3.3 异常值处理\nprint(\"🚫 处理异常值...\")\nvalues = processed_df[TARGET_ATTR]\nmean_val = values.mean()\nstd_val = values.std()\nlower_bound = mean_val - 3 * std_val\nupper_bound = mean_val + 3 * std_val\n\ninitial_count = len(processed_df)\nprocessed_df = processed_df[(processed_df[TARGET_ATTR] &gt;= lower_bound) & \n                             (processed_df[TARGET_ATTR] &lt;= upper_bound)]\nprint(f\"   - 删除异常值：{initial_count - len(processed_df)} 条，剩余记录数：{len(processed_df)}\")\n\n# 3.4 转换为GeoDataFrame\nprint(\"\\n🌐 转换为空间数据格式...\")\ngdf = gpd.GeoDataFrame(\n    processed_df,\n    geometry=gpd.points_from_xy(processed_df[X_COL], processed_df[Y_COL]),\n    crs=\"EPSG:4547\"  \n)\n\ngdf[f\"pred_{TARGET_ATTR}\"] = None\ngdf.rename(columns={TARGET_ATTR: \"organic\"}, inplace=True) \n\n# ====================== 读取并预处理渔网点数据 ======================\nprint(\"\\n📥 正在读取插值网格数据...\")\ntry:\n    grid_gdf = gpd.read_file(RAW_GRID_PATH)\n    print(f\"📊 网格数据信息：\")\n    print(f\"   - 总网格点数：{len(grid_gdf)}\")\n    print(f\"   - 坐标系：{grid_gdf.crs}\")\nexcept Exception as e:\n    print(f\"❌ 读取网格数据失败：{e}\")\n    exit(1)\n\n# 4.1 确保网格和样点坐标系一致\nif grid_gdf.crs != gdf.crs:\n    print(\"🔄 统一网格坐标系与样点数据...\")\n    grid_gdf = grid_gdf.to_crs(gdf.crs)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>土壤属性插值复现</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#插值结果分析",
+    "href": "index.html#插值结果分析",
+    "title": "repro",
+    "section": "5.1 插值结果分析",
+    "text": "5.1 插值结果分析\n-从空间分布图可以看出，曾都区土壤有机质含量整体呈现南高北低、西南高东北低的空间分异格局：研究区西南部（图中左下角）有机质含量最高，普遍达到 30-35 g/kg；东北部（图中右上角）含量最低，多在 10-15 g/kg 之间，含量梯度自西南向东北呈平滑过渡。这种分布趋势与区域地形、土地利用类型的空间异质性高度契合，也与原始样点的统计特征一致。\n-本次普通克里格插值结果整体平滑连续，无明显突变或异常斑块：即使在样点分布稀疏的南部区域，也未出现不合理的数值跳跃，说明模型成功捕捉了土壤有机质的空间自相关性，实现了无偏最优的空间预测，有效避免了传统反距离加权插值易出现的 “牛眼效应”。\n-从数值范围来看，插值结果完整覆盖了研究区土壤有机质的变异区间，且含量梯度过渡自然，未出现极端异常值；中北部密集的采样点有效约束了插值精度，南部区域的插值结果也保持了良好的空间连续性，验证了本次插值方案的可靠性。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>土壤属性插值复现</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#方法说明",
+    "href": "index.html#方法说明",
+    "title": "repro",
+    "section": "5.2 方法说明",
+    "text": "5.2 方法说明\n本次仅使用普通克里格（Ordinary Kriging, OK） 进行土壤属性空间插值，该方法是土壤数字制图领域的经典地统计方法，核心优势在于： 1. 能够充分利用样点的空间自相关性，实现无偏最优预测 2. 能够同时输出预测值和误差方差，量化插值结果的不确定性 3. 模型结构简单，参数易于解释，符合县域土壤属性制图的实际应用需求",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>土壤属性插值复现</span>"
+    ]
+  }
+]

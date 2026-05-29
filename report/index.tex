@@ -1,0 +1,514 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={repro},
+  pdfauthor={Norah Jones},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{repro}
+\author{Norah Jones}
+\date{2026-05-28}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Table of contents}
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+
+\bookmarksetup{startatroot}
+
+\chapter{土壤属性插值复现}\label{ux571fux58e4ux5c5eux6027ux63d2ux503cux590dux73b0}
+
+\bookmarksetup{startatroot}
+
+\chapter{研究背景}\label{ux7814ux7a76ux80ccux666f}
+
+本次作业复现\textbf{普通克里格（Ordinary Kriging, OK）}
+空间插值方法，基于湖北省随州市曾都区654个表层土壤样点数据，实现土壤属性的连续空间分布制图，验证经典地统计方法在县域土壤属性数字制图中的应用效果。
+
+\bookmarksetup{startatroot}
+
+\chapter{数据预处理}\label{ux6570ux636eux9884ux5904ux7406}
+
+\section{数据源说明}\label{ux6570ux636eux6e90ux8bf4ux660e}
+
+\begin{itemize}
+\tightlist
+\item
+  土壤样点数据：\texttt{曾都历史数据.xls}，共654个样点，包含X/Y投影坐标、土壤属性（碱解氮、有效磷、速效钾、有机质、PH值）及地形、气候、土壤类型等环境变量
+\item
+  插值网格数据：\texttt{曾都渔网点.shp}，研究区规则网格点，用于生成连续空间分布结果
+\end{itemize}
+
+\section{数据读取与预处理}\label{ux6570ux636eux8bfbux53d6ux4e0eux9884ux5904ux7406}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ====================== 创建processed文件夹 ======================}
+\NormalTok{os.makedirs(PROCESSED\_DIR, exist\_ok}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"✅ 已创建处理后数据文件夹：}\SpecialCharTok{\{}\NormalTok{PROCESSED\_DIR}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+\CommentTok{\# ====================== 读取并预处理土壤样点数据 ======================}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{📥 正在读取原始土壤样点数据..."}\NormalTok{)}
+\ControlFlowTok{try}\NormalTok{:}
+    \CommentTok{\# 读取Excel数据}
+\NormalTok{    raw\_df }\OperatorTok{=}\NormalTok{ pd.read\_excel(RAW\_SAMPLE\_PATH, sheet\_name}\OperatorTok{=}\StringTok{"曾都历史数据"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"📊 原始样点数据："}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"   {-} 总记录数：}\SpecialCharTok{\{}\BuiltInTok{len}\NormalTok{(raw\_df)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"   {-} 核心列名：}\SpecialCharTok{\{}\NormalTok{[X\_COL, Y\_COL, TARGET\_ATTR, }\StringTok{\textquotesingle{}PH值\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}碱解氮\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}有效磷\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}速效钾\textquotesingle{}}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\ControlFlowTok{except} \PreprocessorTok{Exception} \ImportTok{as}\NormalTok{ e:}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"❌ 读取Excel数据失败：}\SpecialCharTok{\{}\NormalTok{e}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\NormalTok{    exit(}\DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# 3.1 数据清洗：删除缺失值}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{🧹 数据清洗：删除缺失值..."}\NormalTok{)}
+\NormalTok{processed\_df }\OperatorTok{=}\NormalTok{ raw\_df.dropna(subset}\OperatorTok{=}\NormalTok{[X\_COL, Y\_COL, TARGET\_ATTR])}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"   {-} 清洗后记录数：}\SpecialCharTok{\{}\BuiltInTok{len}\NormalTok{(processed\_df)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+\CommentTok{\# 3.2 去重}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"🗑️ 去除重复数据..."}\NormalTok{)}
+\NormalTok{initial\_count }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(processed\_df)}
+\NormalTok{processed\_df }\OperatorTok{=}\NormalTok{ processed\_df.drop\_duplicates(subset}\OperatorTok{=}\NormalTok{[X\_COL, Y\_COL, TARGET\_ATTR], keep}\OperatorTok{=}\StringTok{"first"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"   {-} 去除重复数：}\SpecialCharTok{\{}\NormalTok{initial\_count }\OperatorTok{{-}} \BuiltInTok{len}\NormalTok{(processed\_df)}\SpecialCharTok{\}}\SpecialStringTok{，剩余记录数：}\SpecialCharTok{\{}\BuiltInTok{len}\NormalTok{(processed\_df)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+\CommentTok{\# 3.3 异常值处理}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"🚫 处理异常值..."}\NormalTok{)}
+\NormalTok{values }\OperatorTok{=}\NormalTok{ processed\_df[TARGET\_ATTR]}
+\NormalTok{mean\_val }\OperatorTok{=}\NormalTok{ values.mean()}
+\NormalTok{std\_val }\OperatorTok{=}\NormalTok{ values.std()}
+\NormalTok{lower\_bound }\OperatorTok{=}\NormalTok{ mean\_val }\OperatorTok{{-}} \DecValTok{3} \OperatorTok{*}\NormalTok{ std\_val}
+\NormalTok{upper\_bound }\OperatorTok{=}\NormalTok{ mean\_val }\OperatorTok{+} \DecValTok{3} \OperatorTok{*}\NormalTok{ std\_val}
+
+\NormalTok{initial\_count }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(processed\_df)}
+\NormalTok{processed\_df }\OperatorTok{=}\NormalTok{ processed\_df[(processed\_df[TARGET\_ATTR] }\OperatorTok{\textgreater{}=}\NormalTok{ lower\_bound) }\OperatorTok{\&} 
+\NormalTok{                             (processed\_df[TARGET\_ATTR] }\OperatorTok{\textless{}=}\NormalTok{ upper\_bound)]}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"   {-} 删除异常值：}\SpecialCharTok{\{}\NormalTok{initial\_count }\OperatorTok{{-}} \BuiltInTok{len}\NormalTok{(processed\_df)}\SpecialCharTok{\}}\SpecialStringTok{ 条，剩余记录数：}\SpecialCharTok{\{}\BuiltInTok{len}\NormalTok{(processed\_df)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+\CommentTok{\# 3.4 转换为GeoDataFrame}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{🌐 转换为空间数据格式..."}\NormalTok{)}
+\NormalTok{gdf }\OperatorTok{=}\NormalTok{ gpd.GeoDataFrame(}
+\NormalTok{    processed\_df,}
+\NormalTok{    geometry}\OperatorTok{=}\NormalTok{gpd.points\_from\_xy(processed\_df[X\_COL], processed\_df[Y\_COL]),}
+\NormalTok{    crs}\OperatorTok{=}\StringTok{"EPSG:4547"}  
+\NormalTok{)}
+
+\NormalTok{gdf[}\SpecialStringTok{f"pred\_}\SpecialCharTok{\{}\NormalTok{TARGET\_ATTR}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{] }\OperatorTok{=} \VariableTok{None}
+\NormalTok{gdf.rename(columns}\OperatorTok{=}\NormalTok{\{TARGET\_ATTR: }\StringTok{"organic"}\NormalTok{\}, inplace}\OperatorTok{=}\VariableTok{True}\NormalTok{) }
+
+\CommentTok{\# ====================== 读取并预处理渔网点数据 ======================}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{📥 正在读取插值网格数据..."}\NormalTok{)}
+\ControlFlowTok{try}\NormalTok{:}
+\NormalTok{    grid\_gdf }\OperatorTok{=}\NormalTok{ gpd.read\_file(RAW\_GRID\_PATH)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"📊 网格数据信息："}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"   {-} 总网格点数：}\SpecialCharTok{\{}\BuiltInTok{len}\NormalTok{(grid\_gdf)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"   {-} 坐标系：}\SpecialCharTok{\{}\NormalTok{grid\_gdf}\SpecialCharTok{.}\NormalTok{crs}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\ControlFlowTok{except} \PreprocessorTok{Exception} \ImportTok{as}\NormalTok{ e:}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"❌ 读取网格数据失败：}\SpecialCharTok{\{}\NormalTok{e}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\NormalTok{    exit(}\DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# 4.1 确保网格和样点坐标系一致}
+\ControlFlowTok{if}\NormalTok{ grid\_gdf.crs }\OperatorTok{!=}\NormalTok{ gdf.crs:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"🔄 统一网格坐标系与样点数据..."}\NormalTok{)}
+\NormalTok{    grid\_gdf }\OperatorTok{=}\NormalTok{ grid\_gdf.to\_crs(gdf.crs)}
+\end{Highlighting}
+\end{Shaded}
+
+\bookmarksetup{startatroot}
+
+\chapter{普通克里格插值}\label{ux666eux901aux514bux91ccux683cux63d2ux503c}
+
+普通克里格是地统计中最经典的无偏最优插值方法，假设区域化变量满足二阶平稳性，通过半方差函数拟合样点间的空间自相关性，实现未知点的属性预测。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ===================== 主程序 =====================}
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{\textquotesingle{}\_\_main\_\_\textquotesingle{}}\NormalTok{:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"===== 开始克里格插值计算 ====="}\NormalTok{)}
+    
+    \CommentTok{\# 1. 读取数据}
+\NormalTok{    sample\_df }\OperatorTok{=}\NormalTok{ pd.read\_csv(SAMPLE\_PATH, encoding}\OperatorTok{=}\StringTok{\textquotesingle{}utf{-}8\textquotesingle{}}\NormalTok{)}
+\NormalTok{    grid\_gdf }\OperatorTok{=}\NormalTok{ gpd.read\_file(GRID\_PATH, encoding}\OperatorTok{=}\StringTok{\textquotesingle{}gbk\textquotesingle{}}\NormalTok{)}
+
+    \CommentTok{\# 2. 克里格插值}
+\NormalTok{    x }\OperatorTok{=}\NormalTok{ sample\_df[}\StringTok{"X"}\NormalTok{].values}
+\NormalTok{    y }\OperatorTok{=}\NormalTok{ sample\_df[}\StringTok{"Y"}\NormalTok{].values}
+\NormalTok{    z }\OperatorTok{=}\NormalTok{ sample\_df[TARGET\_ATTR].values}
+
+\NormalTok{    ok\_model }\OperatorTok{=}\NormalTok{ OrdinaryKriging(}
+\NormalTok{        x, y, z,}
+\NormalTok{        variogram\_model}\OperatorTok{=}\StringTok{"gaussian"}\NormalTok{,}
+\NormalTok{        verbose}\OperatorTok{=}\VariableTok{False}\NormalTok{,}
+\NormalTok{        enable\_plotting}\OperatorTok{=}\VariableTok{False}
+\NormalTok{    )}
+
+\NormalTok{    grid\_x }\OperatorTok{=}\NormalTok{ grid\_gdf[}\StringTok{"X"}\NormalTok{].values}
+\NormalTok{    grid\_y }\OperatorTok{=}\NormalTok{ grid\_gdf[}\StringTok{"Y"}\NormalTok{].values}
+
+\NormalTok{    z\_pred, \_ }\OperatorTok{=}\NormalTok{ ok\_model.execute(}
+        \StringTok{"points"}\NormalTok{, grid\_x, grid\_y,}
+\NormalTok{        backend}\OperatorTok{=}\StringTok{"loop"}\NormalTok{,}
+\NormalTok{        n\_closest\_points}\OperatorTok{=}\DecValTok{10}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\bookmarksetup{startatroot}
+
+\chapter{结果可视化}\label{ux7ed3ux679cux53efux89c6ux5316}
+
+本节生成土壤属性空间分布图，直观展示插值结果。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ===================== 绘图设置 =====================}
+\NormalTok{plt.rcParams[}\StringTok{\textquotesingle{}figure.dpi\textquotesingle{}}\NormalTok{] }\OperatorTok{=} \DecValTok{300}
+\NormalTok{plt.rcParams[}\StringTok{\textquotesingle{}font.sans{-}serif\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}SimHei\textquotesingle{}}\NormalTok{]}
+\NormalTok{plt.rcParams[}\StringTok{\textquotesingle{}axes.unicode\_minus\textquotesingle{}}\NormalTok{] }\OperatorTok{=} \VariableTok{False}
+
+\CommentTok{\# ===================== 主程序 =====================}
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{\textquotesingle{}\_\_main\_\_\textquotesingle{}}\NormalTok{:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"===== 开始可视化绘图 ====="}\NormalTok{)}
+    
+    \CommentTok{\# 1. 读取原始网格shp}
+\NormalTok{    grid\_gdf }\OperatorTok{=}\NormalTok{ gpd.read\_file(GRID\_PATH, encoding}\OperatorTok{=}\StringTok{\textquotesingle{}gbk\textquotesingle{}}\NormalTok{)}
+    \CommentTok{\# 2. 读取插值结果}
+\NormalTok{    pred\_data }\OperatorTok{=}\NormalTok{ pd.read\_csv(RESULT\_PATH, encoding}\OperatorTok{=}\StringTok{\textquotesingle{}utf{-}8\textquotesingle{}}\NormalTok{)}
+    
+    \CommentTok{\# 合并数据}
+\NormalTok{    grid\_gdf[}\StringTok{"pred\_organic"}\NormalTok{] }\OperatorTok{=}\NormalTok{ pred\_data[}\StringTok{"pred\_organic"}\NormalTok{]}
+    
+    \CommentTok{\# 读取采样点}
+\NormalTok{    sample\_df }\OperatorTok{=}\NormalTok{ pd.read\_csv(SAMPLE\_PATH, encoding}\OperatorTok{=}\StringTok{\textquotesingle{}utf{-}8\textquotesingle{}}\NormalTok{)}
+
+    \CommentTok{\# 3. 绘图}
+\NormalTok{    fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{12}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\NormalTok{    grid\_gdf.plot(}
+\NormalTok{        column}\OperatorTok{=}\StringTok{"pred\_organic"}\NormalTok{,}
+\NormalTok{        cmap}\OperatorTok{=}\StringTok{"YlGnBu"}\NormalTok{,}
+\NormalTok{        legend}\OperatorTok{=}\VariableTok{True}\NormalTok{,}
+\NormalTok{        legend\_kwds}\OperatorTok{=}\NormalTok{\{}\StringTok{"label"}\NormalTok{: }\SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{ATTR\_CN}\SpecialCharTok{\}}\SpecialStringTok{ 含量"}\NormalTok{\},}
+\NormalTok{        ax}\OperatorTok{=}\NormalTok{ax,}
+\NormalTok{        markersize}\OperatorTok{=}\DecValTok{1}
+\NormalTok{    )}
+\NormalTok{    ax.scatter(sample\_df[}\StringTok{"X"}\NormalTok{], sample\_df[}\StringTok{"Y"}\NormalTok{], c}\OperatorTok{=}\StringTok{"red"}\NormalTok{, s}\OperatorTok{=}\DecValTok{6}\NormalTok{, label}\OperatorTok{=}\StringTok{"土壤采样点"}\NormalTok{)}
+\NormalTok{    ax.set\_title(}\SpecialStringTok{f"曾都区土壤}\SpecialCharTok{\{}\NormalTok{ATTR\_CN}\SpecialCharTok{\}}\SpecialStringTok{普通克里格插值结果"}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{16}\NormalTok{)}
+\NormalTok{    ax.legend()}
+\NormalTok{    ax.axis(}\StringTok{"equal"}\NormalTok{)}
+
+    \CommentTok{\# 4. 保存图片}
+\NormalTok{    os.makedirs(}\StringTok{"../results/figures"}\NormalTok{, exist\_ok}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+\NormalTok{    plt.savefig(FIG\_PATH, bbox\_inches}\OperatorTok{=}\StringTok{"tight"}\NormalTok{)}
+\NormalTok{    plt.close()}
+\end{Highlighting}
+\end{Shaded}
+
+\bookmarksetup{startatroot}
+
+\chapter{结果解读与结论}\label{ux7ed3ux679cux89e3ux8bfbux4e0eux7ed3ux8bba}
+
+\section{插值结果分析}\label{ux63d2ux503cux7ed3ux679cux5206ux6790}
+
+-从空间分布图可以看出，曾都区土壤有机质含量整体呈现南高北低、西南高东北低的空间分异格局：研究区西南部（图中左下角）有机质含量最高，普遍达到
+30-35 g/kg；东北部（图中右上角）含量最低，多在 10-15 g/kg
+之间，含量梯度自西南向东北呈平滑过渡。这种分布趋势与区域地形、土地利用类型的空间异质性高度契合，也与原始样点的统计特征一致。
+-本次普通克里格插值结果整体平滑连续，无明显突变或异常斑块：即使在样点分布稀疏的南部区域，也未出现不合理的数值跳跃，说明模型成功捕捉了土壤有机质的空间自相关性，实现了无偏最优的空间预测，有效避免了传统反距离加权插值易出现的
+``牛眼效应''。
+-从数值范围来看，插值结果完整覆盖了研究区土壤有机质的变异区间，且含量梯度过渡自然，未出现极端异常值；中北部密集的采样点有效约束了插值精度，南部区域的插值结果也保持了良好的空间连续性，验证了本次插值方案的可靠性。
+
+\section{方法说明}\label{ux65b9ux6cd5ux8bf4ux660e}
+
+本次仅使用\textbf{普通克里格（Ordinary Kriging, OK）}
+进行土壤属性空间插值，该方法是土壤数字制图领域的经典地统计方法，核心优势在于：
+1. 能够充分利用样点的空间自相关性，实现无偏最优预测 2.
+能够同时输出预测值和误差方差，量化插值结果的不确定性 3.
+模型结构简单，参数易于解释，符合县域土壤属性制图的实际应用需求
+
+\bookmarksetup{startatroot}
+
+\chapter{六、可复现性说明}\label{ux516dux53efux590dux73b0ux6027ux8bf4ux660e}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  本项目全部采用 Python 开源工具库开发，仅需通过 pip install pykrige
+  pandas numpy matplotlib geopandas openpyxl
+  一条指令就能完成全部环境配置，没有特殊的环境依赖，通用性强。
+\item
+  代码中的数据读取路径、字段列名都和本次使用的
+  曾都历史数据.xls、曾都渔网点.shp
+  完全匹配，拿到代码后可以直接运行，不需要额外修改。
+\item
+  本次插值使用的高斯半方差模型、最近 10
+  个点搜索等核心参数均为固定设置，整个计算过程不包含随机因素，在不同电脑、不同时间运行，都能得到完全一致的结果。
+\end{enumerate}
+
+\bookmarksetup{startatroot}
+
+\chapter{Introduction}\label{introduction}
+
+This is a book created from markdown and executable code.
+
+See Knuth (1984) for additional discussion of literate programming.
+
+\bookmarksetup{startatroot}
+
+\chapter{Summary}\label{summary}
+
+In summary, this book has no content whatsoever.
+
+\bookmarksetup{startatroot}
+
+\chapter*{References}\label{references}
+\addcontentsline{toc}{chapter}{References}
+
+\markboth{References}{References}
+
+\protect\phantomsection\label{refs}
+\begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-knuth84}
+Knuth, Donald E. 1984. {``Literate Programming.''} \emph{Comput. J.}
+(USA) 27 (2): 97--111. \url{https://doi.org/10.1093/comjnl/27.2.97}.
+
+\end{CSLReferences}
+
+
+
+
+\end{document}
