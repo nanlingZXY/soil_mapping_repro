@@ -1,6 +1,6 @@
 ---
 title: 土壤属性插值复现
-author: 你的小组名
+author: 土壤制图复现小组
 date: 2026-05-28
 format:
   html:
